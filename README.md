@@ -63,7 +63,7 @@ saas-builder-multi-agent/
 
 ### Prerequisites
 - Python 3.11+
-- An OpenAI API key with access to `gpt-4o-mini`
+- An OpenAI API key with billing enabled — each full pipeline run makes ~6+ LLM calls (gpt-4o-mini) and will incur usage cost on your own key.
 
 ### Installation
 
