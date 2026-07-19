@@ -31,5 +31,4 @@ class P116Project(ProjectBase):
 
 
 if __name__ == "__main__":
-    pass
-    # Add usage example of your project here.
+    P116Project.print_summary()

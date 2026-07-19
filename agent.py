@@ -1,10 +1,8 @@
-import sys
 from pathlib import Path
 from llm import call_llm
-from metrics import Metrics 
+from metrics import Metrics
+from logger import Logger
 
-sys.path.insert(0, str(Path(__file__).parent.parent.parent))
-from core import Logger
 logger = Logger()
 
 # --------------------------
