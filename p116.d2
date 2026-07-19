@@ -1,0 +1,92 @@
+...@../../../diagrams/_theme.d2
+#----Styles----
+**: {
+  llm*: {
+    class: agent
+  }
+}
+llm*: {
+  class: agent
+}
+
+#IO
+in: "User /\nBusiness Idea" {
+  class: in
+}
+out: "SaaS Launch Bundle" {
+  class: out
+}
+
+#Components
+llm1: "Inverse Prompting\nAgent" {
+  class: agent
+  tooltip: "Interrogates the user with clarifying questions to narrow down SaaS niche and monetization model."
+}
+
+llm2: "Planning\nAgent" {
+  class: agent
+  tooltip: "Structures the overall workflow and decomposes the task into parallel workstreams."
+}
+
+parallel: "Parallelization" {
+  llm3: "Technical\nArchitecture Agent" {
+    class: agent
+    tooltip: "Generates DB schema and system architecture as a JSON artifact."
+  }
+  llm4: "Marketing\nStrategy Agent" {
+    class: agent
+    tooltip: "Produces a 12-week go-to-market roadmap as a Markdown document."
+  }
+  db1: "Architecture\n(JSON)" {
+    class: code
+  }
+  db2: "Roadmap\n(Markdown)" {
+    class: code
+  }
+}
+
+llm5: "Consistency\nAgent" {
+  class: agent
+  tooltip: "Cross-references technical constraints with marketing promises to detect and resolve misalignments."
+}
+
+llm6: "Critic /\nReflection Agent" {
+  class: agent
+  tooltip: "Evaluates the final roadmap quality. If issues found, feeds back to Planning Agent for refinement."
+}
+
+compiler: "HTML Dashboard\nRenderer" {
+  class: code
+  tooltip: "Assembles JSON and Markdown artifacts into a unified HTML dashboard output."
+}
+
+#Transitions
+
+# Inverse Prompting loop
+in -> llm1: "raw idea"
+llm1 -> in: "clarification\nquestions"
+
+llm1 -> llm2: "refined intent\n& niche"
+
+# Parallelization
+llm2 -> parallel.llm3: "plan"
+llm2 -> parallel.llm4: "plan"
+
+parallel.llm3 -> parallel.db1
+parallel.llm4 -> parallel.db2
+
+parallel.db1 -> llm5: "architecture\n(JSON)"
+parallel.db2 -> llm5: "roadmap\n(Markdown)"
+
+llm5 -> llm6: "aligned\nbundle"
+
+# Reflection loop
+llm6 -> llm2: "feedback /\nrefine" {
+  style: {
+    stroke-dash: 5
+    stroke: "#e05555"
+  }
+}
+
+llm6 -> compiler: "approved\nbundle"
+compiler -> out: "HTML +\nJSON + MD"
